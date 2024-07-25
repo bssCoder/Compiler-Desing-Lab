@@ -9,9 +9,16 @@ string removeComments(string prgm)
 	string res;
 	bool s_cmt = false;
 	bool m_cmt = false;
+	bool coln=0;
 	for (int i=0; i<n; i++)
 	{
-		if (s_cmt == true && prgm[i] == '\n')
+		if(!coln && prgm[i]=='"') 
+			coln=1,res+=prgm[i];
+		else if(coln && prgm[i]=='"') 
+			coln=0,res+=prgm[i];
+		else if (coln)
+			res+=prgm[i];
+		else if (s_cmt == true && prgm[i] == '\n')
 			s_cmt = false;
 		else if (m_cmt == true && prgm[i] == '*' && prgm[i+1] == '/')
 			m_cmt = false, i++;
